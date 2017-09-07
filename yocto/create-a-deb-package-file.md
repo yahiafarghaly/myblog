@@ -126,7 +126,7 @@ Label: apt repository
 Codename: yahia
 Architectures: amd64 i386
 Components: main
-Description: test authorization
+Description: test repo
 Pull: yahia
 ```
 the distribution here is 'yahia' with component 'main', you can read more about from [here](http://www.ibiblio.org/gferg/ldp/giles/repository/repository-2.html) but the important thing here is the Architectures section. It should contain all architectures your repo support.
