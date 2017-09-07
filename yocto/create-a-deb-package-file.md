@@ -39,7 +39,7 @@ Maintainer: yahia farghaly (yahiafarghaly@gmail.com)
 Description: A simple program that multiply numbers and return the result
 ```
 
-Note, that i made multiply for x86 and add for x64, the reason for that will come later. Another note, if you gonne make more description,make to ident space for each new line. for example
+Note, that i made multiply for x86 and add for x64, the reason for that will come later. Another note, if you gonne make more descriptions, make sure to ident space for each new line. for example
 ```
 Description: A simple program that multiply two numbers and return the result
   etc ......................................
@@ -109,5 +109,71 @@ dpkg-deb: building package `add' in `add_1.0-0.deb'.
 $ dpkg-deb --build multiply_1.0-0/
 dpkg-deb: building package `multiply' in `multiply_1.0-0.deb'.
 ```
-Now, we made our debian packages. Let's return to 
-## Modifying the sources.list file in yocto image.
+Now, we made our debian packages. Let's moves them to *my-repo* directory, so the tree looks like this
+```
+/var/www/html/my-repo/released-packages/
+├── add_1.0-0.deb
+└── multiply_1.0-0.deb
+```
+Now, we have debian files in one place and what is left, is making this directory(released-packages) looks like the official debian repositories, we will make a file which a tool called **reprepro** will structure the released-packages with "The Debian Way" for repositories. 
+```sh
+$ touch conf/distributions
+```
+in the distributions file,
+```
+Origin: yahia-repo
+Label: apt repository
+Codename: yahia
+Architectures: amd64 i386
+Components: main
+Description: test authorization
+Pull: yahia
+```
+the distribution here is 'yahia' with component 'main', you can read more about from [here](http://www.ibiblio.org/gferg/ldp/giles/repository/repository-2.html) but the important thing here is the Architectures section. It should contain all architectures your repo support.
+
+After creating this file, execute the following command to generate structured files on the debain way.
+```sh
+$ ls 
+$ add_1.0-0.deb multiply_1.0-0.deb conf
+$ reprepro --ask-passphrase -Vb . includedeb yahia add_1.0-0.deb
+$ reprepro --ask-passphrase -Vb . includedeb yahia multiply_1.0-0.deb 
+```
+you should do the command for each deb file, the tree of this directory will be
+
+```
+.
+├── add_1.0-0.deb
+├── conf
+│   └── distributions
+├── db
+│   ├── checksums.db
+│   ├── contents.cache.db
+│   ├── packages.db
+│   ├── references.db
+│   ├── release.caches.db
+│   └── version
+├── dists
+│   └── yahia
+│       ├── main
+│       │   ├── binary-amd64
+│       │   │   ├── Packages
+│       │   │   ├── Packages.gz
+│       │   │   └── Release
+│       │   └── binary-i386
+│       │       ├── Packages
+│       │       ├── Packages.gz
+│       │       └── Release
+│       └── Release
+├── multiply_1.0-0.deb
+└── pool
+    └── main
+        ├── a
+        │   └── add
+        │       └── add_1.0-0_amd64.deb
+        └── m
+            └── multiply
+                └── multiply_1.0-0_i386.deb
+```
+as you note, it seperates the packages depending on the architecture. 
+
+## Modifying the sources.list file with yocto.
