@@ -1,4 +1,4 @@
-# Create a debian package file
+# Create a debian package file with server database
 In this post, we will create a debian package file from a compiled binary source and put in our server in addition of modifying the source list in yocto image so it can see the packages.
 
 ## Creation of a debian package 
@@ -251,4 +251,4 @@ Congratulation !, you made a successful pull from your online repository to your
  ```
  if we change the version of add to say (1.1-0) and regenerate a deb package and put it in the server with the suitable structure to be generated again for the package. We can definitly execute apt-get upgrade without the need of rebuilding the image with the new version. 
  
- This can be enough for you but if you want your repository packages to be trusted from apt-get so it got be installed without warning. follow the [next post]()
+ This can be enough for you but if you want your repository packages to be trusted from apt-get so it got be installed without warning. follow the [next post](authorize-a-deb-file.md)
