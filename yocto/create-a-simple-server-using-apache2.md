@@ -41,5 +41,6 @@ Create a directory inside my-repo which contains two directories (one for i386 p
 ```sh
 $ mkdir released-packages/i386 released-packages/amd64 -p
 ```
+Now, if you type in your browser http://156.xxx.xxx.xxx/my-repo/ , it will show you the *released-packages* directory we just created.
 
 In the next post, I will explain how to [make a deb package](create-a-deb-package-file.md) from a binary file. 
