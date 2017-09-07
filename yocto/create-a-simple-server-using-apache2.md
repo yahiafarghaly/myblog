@@ -37,9 +37,9 @@ $ ln -s /var/www/html/my-repo /home/yahia/Desktop/elinux_dev/yahia-deb/
 ```
 yahia-deb is where i keep my developed packages with released versions which will be online.
 
-create two directories inside my-repo *deb_packages* where you develop your softwares that will be converted later to deb files and the second one *yahia-repo* (or whatever you like)  is where our final deb package will be exist.
+Create a directory inside my-repo which contains two directories (one for i386 packages and one for amd64)
 ```sh
-$ mkdir deb_packages yahia-repo
+$ mkdir released-packages/i386 released-packages/amd64 -p
 ```
 
 In the next post, I will explain how to [make a deb package](create-a-deb-package-file.md) from a binary file. 
