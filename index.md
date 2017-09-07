@@ -1,4 +1,4 @@
-## Welcome to blog :) 
+## Welcome to my blog :) 
 
 Here you can find some of my projects documentations,developing notes or any thing else.
 
