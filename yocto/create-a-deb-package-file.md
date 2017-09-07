@@ -102,4 +102,12 @@ multiply_1.0-0
         └── multiply
 ```
 
+now, execute this command on both packages to create a debian file foe each of them.
+```sh
+$ dpkg-deb --build add_1.0-0/
+dpkg-deb: building package `add' in `add_1.0-0.deb'.
+$ dpkg-deb --build multiply_1.0-0/
+dpkg-deb: building package `multiply' in `multiply_1.0-0.deb'.
+```
+Now, we made our debian packages. Let's return to 
 ## Modifying the sources.list file in yocto image.
