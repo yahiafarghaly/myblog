@@ -20,9 +20,7 @@ Probably, you will see it loading without showing anything. This is because your
 you can get your public IP from command line with 
 
 ```sh
-
 wget http://ipecho.net/plain -O - -q ; echo
-
 ```
 let's say that the public IP was 156.xxx.xxx.xxx. so, if you type in the browser ** http://156.xxx.xxx.xxx/index.html ** then your router will forward the request to server local IP (in this case, it was 192.168.1.6) then it will shown the below image. 
 
@@ -44,4 +42,4 @@ create two directories inside my-repo *deb_packages* where you develop your soft
 $ mkdir deb_packages yahia-repo
 ```
 
-In the next post, I will explain how to [make a deb package](create-a-deb-package-file.md) from your binary. 
+In the next post, I will explain how to [make a deb package](create-a-deb-package-file.md) from a binary file. 
