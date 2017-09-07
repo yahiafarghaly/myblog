@@ -55,3 +55,20 @@ LICENSE = "MIT"
 IMAGE_ROOTFS_SIZE ?= "16192"
 ```
 Here we inherit core-minimal-image then add to this image a feature of supporting **package-managment**
+
+#### in local/local.conf 
+edit the PACKAGE_CLASSES Variable to support debian packages format in yocto
+```python
+PACKAGE_CLASSES ?= "package_deb"
+```
+
+The last thing is to add our new layer to bblayer.conf in your build directory
+
+```python
+BBLAYERS ?= " \
+  /home/yahia/Desktop/elinux_dev/bake_factory/poky-pyro-17.0.1/meta \
+  /home/yahia/Desktop/elinux_dev/bake_factory/poky-pyro-17.0.1/meta-poky \
+  /home/yahia/Desktop/elinux_dev/bake_factory/poky-pyro-17.0.1/meta-yocto-bsp \
+  /home/yahia/Desktop/elinux_dev/bake_factory/poky-pyro-17.0.1/meta-deb-tutorial \
+  "
+```
