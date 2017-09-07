@@ -1,7 +1,7 @@
 # Create a Debian package manager with yocto
 I will present here a series of posts about
   - How add deb package support to a yocto image.
-  - How to create a simple server using apach2 to host debian files.
+  - How to create a simple server using apache2 to host debian files.
   - How to create a deb package file.
   - Finally, how we can authorize our packages so it can be trusted from apt-get. 
   
@@ -17,5 +17,41 @@ First, we will create a new image based on core-minimal-image, so we can modify 
 ```sh
 $ cd <yocto directory>
 $ source oe-init-build-env
-$ yocto-layer create mylayer
+$ yocto-layer create deb-tutorial
 ```
+Don't go with the default steps of creating the layer and do instead
+```sh
+$ mkdir -p conf images recipes-core/packages-recipe
+$ touch conf/layer.conf images/my-image.bb
+```
+#### in conf/layer.conf
+
+```python
+# We have a conf and classes directory, add to BBPATH
+BBPATH .= ":${LAYERDIR}"
+
+# We have recipes-* directories, add to BBFILES
+BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
+	${LAYERDIR}/recipes-*/*/*.bbappend"
+
+BBFILE_COLLECTIONS += "mylayer"
+BBFILE_PATTERN_mylayer = "^${LAYERDIR}/"
+BBFILE_PRIORITY_mylayer = "99"
+```
+
+#### in images/my-image.bb 
+```python
+SUMMARY = "An image which add the support of using deb package management"
+
+inherit core-image
+include recipes­core/images/core­-image-­minimal.bb
+
+IMAGE_FEATURES += "package-management"
+
+IMAGE_LINGUA = " "
+
+LICENSE = "MIT"
+
+IMAGE_ROOTFS_SIZE ?= "16192"
+```
+Here we inherit core-minimal-image then add to this image a feature of supporting **package-managment**
