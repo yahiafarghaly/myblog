@@ -174,6 +174,81 @@ you should do the command for each deb file, the tree of this directory will be
             └── multiply
                 └── multiply_1.0-0_i386.deb
 ```
-as you note, it seperates the packages depending on the architecture. 
+as you note, it seperates the packages depending on the architecture. Now our ready is ready to be identified by apt-get package manager. 
 
 ## Modifying the sources.list file with yocto.
+Before we run our image again, we need to modify this file (/etc/apt/sources.list) on the image which tells apt-get where to get the packages. by default it is empty and our goal is to write to it as
+```
+deb http://156.xxx.xxx.xxx/my-repo/released-packages yahia main
+```
+So, in recipes-core directory, create a recipe folder called **packages-recipe** and inside it create the following
+```sh
+$ mkdir packages-recipe/files -p
+$ cd packages-recipe
+$ touch debian-package-support.bb files/sources.list
+```
+In sources.list, we put the last line mentioned 
+```
+deb http://156.xxx.xxx.xxx/my-repo/released-packages yahia main
+```
+
+In **debian-package-support.bb** ,we write
+```python
+SUMMARY = "Responsible for providing all facilities to prepare deb package manager"
+LICENSE = "CLOSED"
+PR = "r0"
+
+SRC_URI = "file://sources.list \
+			"
+
+
+do_install() {
+	install -d ${D}/etc/apt/
+	install -m 0644 ${WORKDIR}/sources.list ${D}/etc/apt/ 
+}
+```
+
+then in **my-image.bb** we add this line, so bitbake install our new recipe.
+```python
+IMAGE_INSTALL_append = "debian-package-support"
+```
+the recipe is simply transfer our modified sources.list to rootfs of image.
+
+Then we ***bitbake*** :) and execute runqemu qemux86-64
+
+After login into the image, we execute
+```sh
+apt-get update
+```
+and you should expect an output similar to that 
+```
+Ign:1 http://156.222.48.201/my-repo/released-packages yahia InRelease
+Get:2 http://156.222.48.201/my-repo/released-packages yahia Release [1603 B]
+Ign:3 http://156.222.48.201/my-repo/released-packages yahia Release.gpg
+Get:4 http://156.222.48.201/my-repo/released-packages yahia/main amd64 Packages [337 B]
+Fetched 1940 B in 0s (4303 B/s)  
+Reading package lists... Done
+W: The repository 'http://156.222.48.201/my-repo/released-packages yahia Release' is not signed.
+N: Data from such a repository can't be authenticated and is therefore potentially dangerous to use.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+
+```
+
+Congratulation !, you made a successful pull from your online repository to your target machine.
+
+### Two notes to say
+ - you notice it pulls only the amd64, this is because the kernel i built for qemux86-64 was 64-bit,so it should able to run both 64bits and 32bits programs but it pulled only the 64bits version (add program). if you build for qemux86, it will pull only the 32 bit version(multipy program)
+ - The warning about the authoriztion of packages since we haven't signed our packages to be trusted yet by apt-get. But we will discuss that in the next post.
+ 
+ Now, you can do
+ ```sh
+ $ apt-get install add
+ ```
+ and it is installed in /usr/bin as defined before in the debian file. And by that it's added to the same $PATH of current shell so you can execute it directly.
+ ```sh
+ $ add 4 2 3
+ $ 9
+ ```
+ if we change the version of add to say (1.1-0) and regenerate a deb package and put it in the server with the suitable structure to be generated again for the package. We can definitly execute apt-get upgrade without the need of rebuilding the image with the new version. 
+ 
+ This can be enough for you but if you want your repository packages to be trusted from apt-get so it got be installed without warning. follow the [next post]()
