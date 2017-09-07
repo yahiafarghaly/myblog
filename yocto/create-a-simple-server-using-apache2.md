@@ -44,4 +44,4 @@ create two directories inside my-repo *deb_packages* where you develop your soft
 $ mkdir deb_packages yahia-repo
 ```
 
-In the next post, I will explain how to [make a deb package]() from your binary. 
+In the next post, I will explain how to [make a deb package](create-a-deb-package-file.md) from your binary. 
