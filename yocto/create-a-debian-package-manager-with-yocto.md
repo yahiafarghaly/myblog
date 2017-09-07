@@ -21,8 +21,8 @@ $ yocto-layer create deb-tutorial
 ```
 Don't go with the default steps of creating the layer and do instead
 ```sh
-$ mkdir -p conf images recipes-core/packages-recipe
-$ touch conf/layer.conf images/my-image.bb
+$ mkdir -p conf recipes-core/images recipes-core/packages-recipe
+$ touch conf/layer.conf recipes-core/images/my-image.bb
 ```
 #### in conf/layer.conf
 
@@ -72,3 +72,10 @@ BBLAYERS ?= " \
   /home/yahia/Desktop/elinux_dev/bake_factory/poky-pyro-17.0.1/meta-deb-tutorial \
   "
 ```
+then we bitbake 
+```sh
+$ bitbake my-image
+``` 
+then run the image on whatever the target you working on, i use qemux86-64 .. and finally, you have an image which has an apt-get command that capable of install deb packages.
+
+In the next post, we will [create a simple server using apache2](create-a-simple-server-using-apache2.md) to host debs files.
