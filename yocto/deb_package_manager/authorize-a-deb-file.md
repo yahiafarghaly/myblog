@@ -63,4 +63,4 @@ $ apt-key list
 ```
 and it should list a brief content of your public key. Now, let's run **apt-get update**,then you should see the update without warning about authorization. you may see a warning about SHA1 weak algorithm but this is fine for purpose of testing the authorization idea.
 
-At the end, i hope you enjoyed reading my posts about this small project.
+At the end, i hope you enjoyed reading my posts about this small project. For layer i created you can find it [here](meta-deb-tutorial) on my github repo
