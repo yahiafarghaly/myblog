@@ -5,7 +5,7 @@ If you build images with yocto on a remote server using ssh, then you may face s
 
 The easiest way i figured for solving this problem is using [tmux](https://github.com/tmux/tmux) which enables managing multiple of terminals depending on each other in a single window. By that, tmux enables us to have a menuconfig view to be called as a child for the parent terminal of your ssh connection.
 
-following the [REAMME](https://github.com/tmux/tmux/blob/master/README) of [tmux](https://github.com/tmux/tmux). Remember to install the required dependencies of [tmux](https://github.com/tmux/tmux) which are [libevent 2.x](http://libevent.org) and [ncurses](http://invisible-island.net/ncurses/)
+following the [README](https://github.com/tmux/tmux/blob/master/README) of [tmux](https://github.com/tmux/tmux). Remember to install the required dependencies of [tmux](https://github.com/tmux/tmux) which are [libevent 2.x](http://libevent.org) and [ncurses](http://invisible-island.net/ncurses/)
 
 On Ubuntu, you can install them using apt-get
 ```sh
@@ -18,7 +18,9 @@ For using tmux with bitbake, type
 ```sh
 $ tmux
 $ bitbake -c menuconfig virtual/kernel
- # save your configuration
+ # save your kernel configurations
  # to exit tmux,type
 $ exit
 ```
+
+That is all, hope this works for you. 
