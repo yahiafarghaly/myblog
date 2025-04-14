@@ -17,4 +17,4 @@ Here you can find some of my projects documentations,developing notes or any thi
 You can reach me by sending me an email to: yahiafarghaly@gmail.com
 
 ### Others
-[My CV](https://bit.ly/2LaL3JF)
+[My CV](https://drive.google.com/file/d/1NjiOacZeYS0hXxq1WlrEF8vzCywRms3F/view?usp=sharing)
